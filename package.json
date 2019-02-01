@@ -1,0 +1,23 @@
+{
+  "name": "target-operation-scheduler",
+  "version": "1.0.0",
+  "description": "Creates a schedule for satellite operation based on location of targets, orbits and the condition at the time of passing of the target",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://AlexanderProschek@github.com/AlexanderProschek/Target-Operation-Scheduler.git"
+  },
+  "author": "Alexander Proschek",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AlexanderProschek/Target-Operation-Scheduler/issues"
+  },
+  "homepage": "https://github.com/AlexanderProschek/Target-Operation-Scheduler#readme",
+  "dependencies": {
+    "date-and-time": "^0.6.3",
+    "dotenv": "^6.2.0"
+  }
+}
