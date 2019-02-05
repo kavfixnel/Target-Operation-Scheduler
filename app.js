@@ -2,24 +2,28 @@
 const fs = require('fs');
 const dateTime = require('date-and-time');
 
-// Declaration of variables
-const schema = {
-    'Access': function(e) {
-        return parseInt(e, 10);
-    },
-    
-};
+const schema = require('./schemas/csvSchema');
+
+// Files to be processed
 const files = [
-    'dataShort.csv'
+    './data/dataShort.csv'
 ];
-var data = schema;
 
 // Read in the CSV file(s)
-var nnn;
+var data = [];
 files.forEach(e => {
-    var contents = fs.readFileSync('dataShort.csv', 'utf8');
-    nnn = contents.split(',\r\n');
+    var file = fs.readFileSync(e, 'utf8');
+    contents.split(',\r\n').forEach(e => {
+        var dataPoint = {};
+        for(i = 0; i < schema.length; i++) {
+            // Preprocessing
 
+            // Saving data into dataPoint{}
+
+        }
+        // Push dataPoint{} to data[]
+        data.push(dataPoint);
+    });
 });
 
 var line = nnn[5].split(',');
