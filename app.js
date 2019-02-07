@@ -13,21 +13,24 @@ const files = [
 var data = [];
 files.forEach(e => {
     var file = fs.readFileSync(e, 'utf8');
-    contents.split(',\r\n').forEach(e => {
+    
+    // Split up the lines
+    file.split('\n').forEach(ee => {
         var dataPoint = {};
+
+        // Split up the datapoints
+        const elements = ee.split(',');
+        if(ee.length != schema.length) {
+            //console.error("Wrong schema length for given data!");
+        }
         for(i = 0; i < schema.length; i++) {
             // Preprocessing
+            var dataElement = schema[i].function(elements[i]);
 
             // Saving data into dataPoint{}
-
+            dataPoint[schema[i].name] = dataElement;
         }
         // Push dataPoint{} to data[]
         data.push(dataPoint);
     });
-});
-
-var line = nnn[5].split(',');
-console.log(nnn[5]);
-line.forEach(e => {
-    console.log(typeof e == 'string');
 });
