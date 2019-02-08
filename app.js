@@ -1,5 +1,8 @@
 const timeStamp1 = new Date();
 
+// Load the environment variables
+require('dotenv').config();
+
 // Import statements
 const fs = require('fs');
 const dateTime = require('date-and-time');
