@@ -12,10 +12,6 @@
 // Declaration of the schema for the CSV input file(s)
 const schema = [
     {
-        'name':'access',
-        'function' : e => { return parseInt(e, 10) }
-    },
-    {
         'name':'start_time',
         'function' : e => { return Date.parse(e) }
     },
@@ -24,16 +20,12 @@ const schema = [
         'function' : e => { return Date.parse(e) }
     },
     {
-        'name':'duration',
-        'function' : e => { return parseInt(e, 10) }
+        'name':'lat',
+        'function' : e => { return parseFloat(e, 10) }
     },
     {
-        'name':'duration',
-        'function' : e => { return parseInt(e, 10) }
-    },
-    {
-        'name':'threshold',
-        'function' : e => { return parseInt(e, 10) }
+        'name':'log',
+        'function' : e => { return parseFloat(e, 10) }
     }
 ];
 

@@ -11,7 +11,7 @@ const schema = require('./schemas/csvInputSchema.js');
 
 // Files to be processed
 const files = [
-    './data/dataShort.csv'
+    './AllPassesFiltered.csv'
 ];
 
 // Read in the CSV file(s)
@@ -47,16 +47,19 @@ data.sort((e1, e2) => {
 
 // Check if there are any overlapping time intervals
 for(i = 0; i < data.length - 1; i++) {
+    console.log("Start "+data[i].start_time);
+    console.log("End   "+data[i].end_time+"\n");
     if(data[i].end_time > data[i+1].start_time) {
-        console.error("Overlapping time intervals at the "+i+"th and the "+(i+1)+"th index");
+        //console.error("Overlapping time intervals at the "+i+"th and the "+data.length+"th index");
     }
 }
 
 // Create the output string
 var outStr = "Event Time (UTC),Duration of Mode (s),Active mode\n";
 for(i = 0; i < data.length-1; i++) {
-    var line1 = data[i].start_time+","+data[i].duration+",acive mode\n";
-    var line2 = data[i].end_time+","+((data[i+1].start_time-data[i].end_time)/1000)+",cruise mode\n";
+    var line1 = data[i].start_time+","+((data[i].start_time-data[i].end_time)/1000)+",acive mode\n";
+    var duration = (data[i].end_time-data[i+1].start_time/1000) < 0 ? "NaN" : (data[i].end_time-data[i+1].start_time/1000);
+    var line2 = data[i].end_time+","+((data[i].end_time-data[i+1].start_time)/1000)+",cruise mode\n";
     outStr += line1 + line2;
 }
 var line1 = data[data.length-1].start_time+","+data[data.length-1].duration+",acive mode\n";
