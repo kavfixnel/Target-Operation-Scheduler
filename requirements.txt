@@ -1,0 +1,6 @@
+requests
+time
+requests
+sys
+dotenv
+os
