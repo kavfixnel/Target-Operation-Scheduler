@@ -1,13 +1,20 @@
-import requests
-import time
-import requests
-import sys
-from dotenv import load_dotenv
-import os
+#!python
 
-load_dotenv('./.env')
+# Import the required packages
+try:
+    import requests
+    import time
+    import requests
+    import sys
+    from dotenv import load_dotenv
+    import os
+except:
+    print('Error importing the neccessary packages\n> Have you run ./setup?')
+    exit()
 
-# Metadata
+load_dotenv()
+
+# Metadata configuration
 cloudCoverThreshold = 0.8
 progress_width = 40
 run_start = time.time()
@@ -20,13 +27,16 @@ except:
     print('Error opening input file.\n> Make sure the input.csv is in the home folder!')
     exit()
 
+# Check if user has inputed the API key for Darksky
 if not apikey or apikey == '':
      print('Could not find DARKSKYKEY.\n> Change the .env-default file to .env and go to darksky.com/dev to get an API key and put it in the .env file')
      exit()
 
+# Initialize the data storage
 data = []
 textInput = file.read().split('\r\n')
 
+# Read and parse all the lines of input.csv
 for line in textInput:
     dataPoint = {}
     elements = line.split(',')
@@ -36,7 +46,7 @@ for line in textInput:
     dataPoint['long'] = float(elements[3])
     data.append(dataPoint)
 
-# 
+# Array sorting function
 def timeSort(e):
     return int(time.mktime(e['start_time']))
 
@@ -66,11 +76,14 @@ for index, point in enumerate(data):
 
 sys.stdout.write("]\n") # this ends the progress bar
 
+# Filter the target passes by cloud cover
 data = [e for e in data if e['cc'] < cloudCoverThreshold]
 
+# Open a filestream for output.csv 
 outFile = open('output.csv', 'w')
 outFile.write('Event Time (UTC),Duration of Mode (s),Active mode'+'\n')
 
+# Write every line of the target evluation to the output.csv file
 for index, point in enumerate(data):
     start = int(time.mktime(point['start_time']))
     end = int(time.mktime(point['end_time']))
@@ -84,4 +97,5 @@ for index, point in enumerate(data):
         outStr = '{s},,Cruise - Idle'.format(s=str(end))
         outFile.write(outStr+'\n')
 
+# Finish statement
 print("Execution finished in {time} seconds".format(time=time.time()-run_start))

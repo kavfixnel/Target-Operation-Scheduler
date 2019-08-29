@@ -1,6 +1,2 @@
-requests
-time
-requests
-sys
-dotenv
-os
+python-dotenv==0.10.3
+requests==2.22.0
