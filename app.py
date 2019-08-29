@@ -19,6 +19,9 @@ cloudCoverThreshold = 0.8
 progress_width = 40
 run_start = time.time()
 apikey = os.getenv('DARKSKYKEY')
+# Maximum API calls for Darksky
+# 1000 for the free plan
+maxAPICalls = 1000
 
 # Open the input file
 try:
@@ -58,15 +61,21 @@ sys.stdout.write("[%s]" % (" " * progress_width))
 sys.stdout.flush()
 sys.stdout.write("\b" * (progress_width+1)) # return to start of line, after '['
 
+# API calls made
+calls = 0
 # Pull down all the weather data
 for index, point in enumerate(data):
     lat = point['lat']
     long = point['long']
     urlTime = int(time.mktime(point['start_time']))
     url = 'https://api.darksky.net/forecast/{apikey}/{lat},{long},{time}?units=si'.format(apikey=apikey,lat=lat, long=long, time=urlTime)
-    json = requests.get(url).json()
+    r = requests.get(url)
+    json = r.json()
     cloudCover = json['currently']['cloudCover']
     data[index]['cc'] = cloudCover
+
+    # Update the API calls made
+    calls = r.headers['x-forecast-api-calls']
 
     # Update the progress bar
     dash = "-" * ((index+1)/len(data)) * progress_width
@@ -98,4 +107,5 @@ for index, point in enumerate(data):
         outFile.write(outStr+'\n')
 
 # Finish statement
-print("Execution finished in {time} seconds".format(time=time.time()-run_start))
+print('Execution finished in {time} seconds'.format(time=time.time()-run_start))
+print('Used {a}/{b} API calls for today'.format(a=calls, b=maxAPICalls))
