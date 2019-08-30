@@ -114,11 +114,12 @@ for index, point in enumerate(data):
         outStr = '{s},{t},Cruise - Idle'.format(s=end+int(os.getenv('SCAN_FINALIZATION_TIME')), t=start-end-int(os.getenv('SCAN_FINALIZATION_TIME')))
         outFile.write(outStr+'\n')
     except:
-        outStr = '{s},{t},Cruise - Idle'.format(s=end+int(os.getenv('SCAN_FINALIZATION_TIME'), t=os.getenv('FINAL_CURISE_TIME')))
+        outStr = '{s},{t},Cruise - Idle'.format(s=end+int(os.getenv('SCAN_FINALIZATION_TIME')), t=os.getenv('FINAL_CURISE_TIME'))
         outFile.write(outStr+'\n')
 
-        outStr = '{s},0,END'.format(s=end+int(os.getenv('FINAL_CURISE_TIME'))
+        outStr = '{s},0,END'.format(s=end+int(os.getenv('SCAN_FINALIZATION_TIME'))+int(os.getenv('FINAL_CURISE_TIME')))
+        outFile.write(outStr+'\n')
 
 # Finish statement
 print('Execution finished in {time} seconds'.format(time=time.time()-run_start))
-print('Used {a}/{b} API calls for today'.format(a=calls, b=maxAPICalls)
+print('Used {a}/{b} API calls for today'.format(a=calls, b=maxAPICalls))
